@@ -2,8 +2,6 @@ package minesweeper.core;
 
 import java.util.Random;
 
-import javax.naming.TimeLimitExceededException;
-
 import minesweeper.core.Tile.State;
 
 /**

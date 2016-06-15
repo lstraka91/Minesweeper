@@ -28,7 +28,7 @@ public class Minesweeper {
         new Minesweeper();
 //        Field fajld= new Field(9, 9, 10);
 //        fajld.generate();
-        	
+        	 
         
     }
 }
