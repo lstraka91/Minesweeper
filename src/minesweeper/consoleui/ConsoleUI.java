@@ -53,9 +53,11 @@ public class ConsoleUI implements UserInterface {
 			update();
 			processInput();
 			if (field.getState() == GameState.SOLVED) {
+				update();
 				System.out.println("You win!!");
 				System.exit(0);
 			} else if (field.getState() == GameState.FAILED) {
+				update();
 				System.out.println("You loose this game.");
 				System.exit(0);
 			}
@@ -133,10 +135,12 @@ public class ConsoleUI implements UserInterface {
 					int rowMax = 65 + field.getRowCount() - 1;
 					char tempRowMax = (char) rowMax;
 					char tempRowMin = (char) rowMin;
-					if (row >= tempRowMin && row < tempRowMax
+					if (row >= tempRowMin && row <= tempRowMax
 							&& column < field.getColumnCount()) {
 
 						field.openTile(row - 65, column);
+					}else{
+						System.out.println("Out of field range");
 					}
 				} else if (matcher.group(1).equalsIgnoreCase("m")) {
 					int rowMin = 65;
@@ -147,6 +151,8 @@ public class ConsoleUI implements UserInterface {
 							&& column < field.getColumnCount()) {
 
 						field.markTile(row - 65, column);
+					}else{
+						System.out.println("Out of field range");
 					}
 				}
 			} else {

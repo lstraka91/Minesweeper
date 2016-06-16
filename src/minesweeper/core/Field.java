@@ -65,9 +65,14 @@ public class Field {
 		Tile tile = tiles[row][column];
 		if (tile.getState() == Tile.State.CLOSED) {
 			tile.setState(Tile.State.OPEN);
+
 			if (tile instanceof Mine) {
 				setState(GameState.FAILED);
 				return;
+			} else if (tile instanceof Clue) {
+				if (((Clue) tile).getValue() == 0) {
+					openAdjacentTiles(row, column);
+				}
 			}
 
 			if (isSolved()) {
@@ -190,6 +195,33 @@ public class Field {
 		}
 
 		return count;
+	}
+
+	/**
+	 * Open tiles with Clue value 0
+	 * 
+	 * @param row
+	 *            row number.
+	 * @param column
+	 *            column number
+	 */
+	private void openAdjacentTiles(int row, int column) {
+		for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
+			int actRow = row + rowOffset;
+			if (actRow >= 0 && actRow < getRowCount()) {
+				for (int columnOffset = -1; columnOffset <= 1; columnOffset++) {
+					int actColumn = column + columnOffset;
+					if (actColumn >= 0 && actColumn < getColumnCount()) {
+						if (tiles[actRow][actColumn] instanceof Clue) {
+							// if (((Clue) tiles[actRow][actColumn]).getValue()
+							// <= 1) {
+							openTile(actRow, actColumn);
+							// }
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
