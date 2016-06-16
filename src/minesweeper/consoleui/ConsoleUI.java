@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import minesweeper.UserInterface;
 import minesweeper.core.Clue;
 import minesweeper.core.Field;
+import minesweeper.core.GameState;
 import minesweeper.core.Mine;
 import minesweeper.core.Tile;
 import minesweeper.core.Tile.State;
@@ -48,14 +49,17 @@ public class ConsoleUI implements UserInterface {
 	@Override
 	public void newGameStarted(Field field) {
 		this.field = field;
-		update();
-		// do {
-		// update();
-		processInput();
-		// // throw new
-		// //
-		// UnsupportedOperationException("Resolve the game state - winning or loosing condition.");
-		// } while (true);
+		do {
+			update();
+			processInput();
+			if (field.getState() == GameState.SOLVED) {
+				System.out.println("You win!!");
+				System.exit(0);
+			} else if (field.getState() == GameState.FAILED) {
+				System.out.println("You loose this game.");
+				System.exit(0);
+			}
+		} while (true);
 	}
 
 	/*
@@ -105,18 +109,53 @@ public class ConsoleUI implements UserInterface {
 	private void processInput() {
 		System.out
 				.println("Please enter your selection (X) EXIT, (MA2) MARK, (OA2) OPEN ");
-		Scanner inputStream = new Scanner(System.in);
-		String input = inputStream.nextLine();
-		Pattern patern = Pattern.compile("(O|M|X)([A-Z]{1})?([0-9][0-9])?");
+		String input = readLine();
+		Pattern patern = Pattern
+				.compile("([Oo]|[Mm]|[xX])([A-Za-z]{1})?([0-9][0-9]?)?");
 		Matcher matcher = patern.matcher(input);
 
-		
 		if (matcher.matches()) {
 
-			System.out.println(matcher.group(0));
-			System.out.println(matcher.group(1));
-			System.out.println(matcher.group(2));
-			System.out.println(matcher.group(3));
+			if (matcher.group(1).equalsIgnoreCase("x")) {
+				if (matcher.group(0).length() < 2) {
+					System.out.println("Bye Bye !");
+					System.exit(0);
+				} else {
+					System.out.println("To exit type: 'X' or 'x' ");
+					processInput();
+				}
+			} else if (matcher.group(0).length() >= 3
+					&& matcher.group(2) != null) {
+				char row = matcher.group(2).toUpperCase().charAt(0);
+				int column = Integer.parseInt(matcher.group(3));
+				if (matcher.group(1).equalsIgnoreCase("o")) {
+					int rowMin = 65;
+					int rowMax = 65 + field.getRowCount() - 1;
+					char tempRowMax = (char) rowMax;
+					char tempRowMin = (char) rowMin;
+					if (row >= tempRowMin && row < tempRowMax
+							&& column < field.getColumnCount()) {
+
+						field.openTile(row - 65, column);
+					}
+				} else if (matcher.group(1).equalsIgnoreCase("m")) {
+					int rowMin = 65;
+					int rowMax = 65 + field.getRowCount() - 1;
+					char tempRowMax = (char) rowMax;
+					char tempRowMin = (char) rowMin;
+					if (row >= tempRowMin && row < tempRowMax
+							&& column < field.getColumnCount()) {
+
+						field.markTile(row - 65, column);
+					}
+				}
+			} else {
+				System.out.println("You type something wrong try again");
+				processInput();
+			}
+		} else {
+			System.out.println("You type something wrong try again");
+			processInput();
 		}
 	}
 }
