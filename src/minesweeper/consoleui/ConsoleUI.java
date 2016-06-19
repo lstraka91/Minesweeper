@@ -111,7 +111,17 @@ public class ConsoleUI implements UserInterface {
 	private void processInput() {
 		System.out
 				.println("Please enter your selection (X) EXIT, (MA2) MARK, (OA2) OPEN ");
-		String input = readLine();
+		try {
+			String input = readLine();
+			handleInput(input);
+		} catch (WrongFormatException e) {
+			
+			e.getMessage();
+		}
+	}
+
+	private void handleInput(String input) throws WrongFormatException {
+		
 		Pattern patern = Pattern
 				.compile("([Oo]|[Mm]|[xX])([A-Za-z]{1})?([0-9][0-9]?)?");
 		Matcher matcher = patern.matcher(input);
