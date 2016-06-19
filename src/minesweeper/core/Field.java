@@ -282,4 +282,8 @@ public class Field {
 	public void setState(GameState state) {
 		this.state = state;
 	}
+	
+	public int getRemainingMineCount(){
+		return getMineCount()-getNumberof(State.MARKED);
+	}
 }

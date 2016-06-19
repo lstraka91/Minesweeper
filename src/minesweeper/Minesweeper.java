@@ -9,6 +9,8 @@ import minesweeper.core.Field;
 public class Minesweeper {
     /** User interface. */
     private UserInterface userInterface;
+    
+    private long startMillis;
  
     /**
      * Constructor.
@@ -18,6 +20,15 @@ public class Minesweeper {
         
         Field field = new Field(9, 9, 10);
         userInterface.newGameStarted(field);
+        startMillis=System.currentTimeMillis();
+    }
+    /**
+     * Get playing time 
+     * @return int in seconds of playing
+     */
+    public int getPlayingSeconds(){
+    	int currentTime= (int) (System.currentTimeMillis()-startMillis);
+    	return currentTime;
     }
 
     /**
@@ -26,9 +37,7 @@ public class Minesweeper {
      */
     public static void main(String[] args) {
         new Minesweeper();
-//        Field fajld= new Field(9, 9, 10);
-//        fajld.generate();
-        	 
+
         
     }
 }

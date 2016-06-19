@@ -72,6 +72,7 @@ public class ConsoleUI implements UserInterface {
 	@Override
 	public void update() {
 		Tile tile;
+		System.out.println("Remaining count of mines: "+field.getRemainingMineCount());
 		displayFirstRow();
 
 		char rowChar = 'A';
