@@ -73,6 +73,7 @@ public class ConsoleUI implements UserInterface {
 	public void update() {
 		Tile tile;
 		System.out.println("Remaining count of mines: "+field.getRemainingMineCount());
+		System.out.println("Playing time: "+minesweeper.Minesweeper.getInstance().getPlayingSeconds());
 		displayFirstRow();
 
 		char rowChar = 'A';
