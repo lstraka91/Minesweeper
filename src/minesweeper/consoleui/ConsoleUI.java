@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import minesweeper.BestTimes;
 import minesweeper.UserInterface;
 import minesweeper.core.Clue;
 import minesweeper.core.Field;
@@ -104,6 +105,12 @@ public class ConsoleUI implements UserInterface {
 			System.out.printf("  %d", i);
 		}
 		System.out.println();
+	}
+	private void printBT(){
+		BestTimes bt = new BestTimes();
+		bt.addPlayerTime("vajda", 45613);
+		bt.addPlayerTime("super", 451);
+		bt.toString();
 	}
 
 	/**
